@@ -1,0 +1,80 @@
+{% extends "layout.html" %} {% block content %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    {% include 'sidebar.html' %}
+    <!-- Page Content  -->
+    <div id="content">
+        <h2>Profile</h2>
+        <hr />
+        <div class="user-deatils">
+            <h3>User Details</h3>
+            <h4>USERNAME : {{ usname }}</h4>
+            <h4>EMAIL : {{ email }}</h4>
+        </div>
+        <hr />
+        <!-- <div class="forms-wrapper mg-20">
+            <form action="" method="post">
+                <h3>Update user details</h3>
+                <div class="field">
+                    <label for="input-field">Choose a field :</label>
+                    <select name="input-field" id="field">
+                        <option value="USERNAME">USERNAME</option>
+                        <option value="FIRSTNAME">FIRSTNAME</option>
+                        <option value="LASTNAME">LASTNAME</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="input-value">
+                        Enter Value</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="text"
+                        name="input-value"
+                        placeholder=" "
+                    />
+                </div>
+                <button class="submit-button">Update</button>
+            </form> -->
+            <form action="" method="post">
+                <h3>Update Password</h3>
+                <div class="field">
+                    <label class="custom-label" for="prev-password">
+                        Enter Old Password</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="password"
+                        name="prev-password"
+                        placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="cur-password">
+                        Enter New Password</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="password"
+                        name="cur-password"
+                        placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="confirm-password">
+                        Enter Confirm Password</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="password"
+                        name="confirm-password"
+                        placeholder=" "
+                    />
+                </div>
+
+                <button class="submit-button">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

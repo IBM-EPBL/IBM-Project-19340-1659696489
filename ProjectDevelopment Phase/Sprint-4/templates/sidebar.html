@@ -1,0 +1,33 @@
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>IMS</h3>
+    </div>
+
+    <ul class="list-unstyled components sidebar-list-content">
+        <li>
+            <i class="fa fa-fw fa-home"></i>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        </li>
+
+        <li>
+            <i class="fa-solid fa-box"></i>
+            <a href="{{ url_for('editstock') }}">Supplies</a>
+        </li>
+
+        <li>
+            <i class="fa-solid fa-cart-shopping"></i>
+            <a href="{{ url_for('orders') }}">Orders</a>
+        </li>
+        
+
+        <li>
+            <i class="fa-solid fa-user"></i>
+            <a href="{{ url_for('profile') }}">Profile</a>
+        </li>
+        <li>
+            <i class="fa-regular fa-circle-xmark"></i>
+            <a href="{{ url_for('logout') }}">logout</a>
+        </li>
+    </ul>
+</nav>

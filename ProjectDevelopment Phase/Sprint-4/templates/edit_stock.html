@@ -1,0 +1,128 @@
+{% extends "layout.html" %} 
+{% block content %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    {% include 'sidebar.html' %}
+    <!-- Page Content  -->
+    <div id="content">
+        <h2>Inventory</h2>
+        
+        <!-- {% include 'table.html' %} -->
+        <div class="forms-wrapper">
+            <form action="{{url_for('createitem') }}" method="post">
+                <h3>Add Supplies</h3>
+                {% if cimsg=='Item added successfully'%}
+                <div class="mx-8 mt-2 text-success">{{ cimsg }}</div> <br>
+                {% else %}
+                <div class="mx-8 mt-2 text-danger">{{ cimsg }}</div> <br>
+                {% endif %}
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Item ID</label>
+                    <input
+                        class="text-inputs"
+                        type="text"
+                        name="item_id"
+                        placeholder=""
+                    />
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Item Name</label>
+                    <input
+                        class="text-inputs"
+                        type="text"
+                        name="item_name"
+                        placeholder="Enter item name"
+                    />
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Item Quantity</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="number"
+                        name="quantity"
+                        placeholder=""
+                    />
+                </div>
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Per Item Price</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="number"
+                        name="item_ppq"
+                        placeholder="Eg. 10rs"
+                    />
+                </div>
+                
+                
+                <button class="submit-button">Add</button>
+            </form>
+
+            <!-- <form action="" method="post">
+                <h3>Update Item</h3>
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Item ID</label
+                    >
+                    <input
+                        class="text-inputs"
+                        name="item"
+                        type="number"
+                        placeholder=""
+                    />
+                </div>
+                
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Per Item Price</label
+                    >
+                    <input
+                        class="text-inputs"
+                        type="number"
+                        name="quantity"
+                        placeholder="Eg. 10rs"
+                    />
+                </div>
+                 <div class="field">
+                    <label for="custom-label" for="input-field"
+                        >Choose a field -
+                    </label>
+                    <select name="input-field" id="field">
+                        <option value="STOCKS_ID">STOCKS_ID</option>
+                        <option value="QUANTITY">QUANTITY</option>
+                    </select>
+                </div> 
+                
+                <button class="submit-button">Update</button>
+            </form> -->
+            <form action="{{ url_for('removeitem') }}" method="post">
+                <h3>Remove Supplies</h3>
+                {% if delimsg=='Item added successfully'%}
+                <div class="mx-8 mt-2 text-success">{{ delimsg }}</div> <br>
+                {% else %}
+                <div class="mx-8 mt-2 text-danger">{{ delimsg }}</div> <br>
+                {% endif %}
+                <div class="field">
+                    <label class="custom-label" for="item"
+                        >Enter Item ID</label
+                    >
+                    <input
+                        class="text-inputs"
+                        name="ritem"
+                        type="number"
+                        placeholder="item_id"
+                    />
+                </div>
+                <button class="submit-button red-button">Remove</button>
+            </form>
+        </div>
+        
+
+    </div>
+</div>
+{% endblock content %}
