@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="jumbotron text-center">
+  <h1>SVUV Inventory Managament</h1> 
+  <p>Always happy to help</p>
+  <center>
+  <div>
+    <button class="btn btn-default btn-lg" ><a href = "{{ url_for('signup') }}">Sign Up</a></button>
+    <button class="btn btn-default btn-lg" ><a href = "{{ url_for('signin') }}">Sign In</a></button>
+  </div>
+</center>
+</div>
+
+<!-- Container (About Section) -->
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-sm-12">
+        <center>
+      <h2>About Company</h2>
+      <h4>Manage orders. Track inventory. Handle GST billing. Oversee warehouses. One inventory management software to run all your inventory operations.</h4>      
+    </center>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
