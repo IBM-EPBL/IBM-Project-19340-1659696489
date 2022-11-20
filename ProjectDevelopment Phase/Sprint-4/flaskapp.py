@@ -85,17 +85,17 @@ def dashboard():
       ibm_db.bind_param(stmt, 1, user)
       ibm_db.execute(stmt)
       dictionary=ibm_db.fetch_assoc(stmt)
-      if session.get('ord_id')== True:
-         oiqty=dictionary["ITEMSTOCK"]
-         niqty=session['ord_quantity']
-         new_qty= (int)(oiqty)- (int)(niqty)
-         orpq=dictionary["ITEMRPQ"]
-         nrpq=session['ord_item_ppq']
-         new_rqp= (int)(orpq)- (int)(nrpq)
-         query = 'UPDATE ITEMS SET ITEMQUANTITYSOLD=?,ITEMRPQ=?,TOTAL=? WHERE ORDERID=? AND ITEMID=? AND EMAIL=?'
-         pstmt = ibm_db.prepare(conn, query)
-         ibm_db.bind_param(pstmt, 1, user)
-         ibm_db.execute(pstmt)
+      # if session.get('ord_id')== True:
+      #    ord_id = session['ord_id']
+      #    ord_item_id = session['ord_item_id']
+      #    oiqty=dictionary["ITEMSTOCK"]
+      #    niqty=session['ord_quantity']
+      #    new_qty= (int)(oiqty)- (int)(niqty)
+      #    orpq=dictionary["ITEMRPQ"]
+      #    nrpq=session['ord_item_ppq']
+      #    new_rqp= (int)(orpq)- (int)(nrpq)
+      #    newTotal = new_qty * new_rqp
+         
       items=[]
       headings = [*dictionary]
       while dictionary != False:
@@ -188,12 +188,41 @@ def supplies():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
+   if session.get('loggedin')== True:
+      
+      username=session['uname']
+      email=session['user']     
+
+      return render_template('profile.html',usname=username,email=email)
+   else:
+      return redirect(url_for("signin"))
+
+
+@app.route('/updatepassword', methods=['GET', 'POST'])
+def updatepassword():
    if session.get('loggedin')!= True:
          return redirect(url_for("signin"))
    else:
-      username=session['uname']
-      email=session['user']     
-      return render_template('profile.html',usname=username,email=email)
+      email=session['user']   
+      pp = request.form['prev-password']
+      cp = request.form["cur-password"]
+      cop = request.form['confirm-password']
+      print(pp, cp)   
+      sql = "SELECT * FROM CUSTOMERS WHERE email =? AND PASSWORD=?"
+      stmt = ibm_db.prepare(conn, sql)
+      ibm_db.bind_param(stmt, 1, email)
+      ibm_db.bind_param(stmt, 2, pp)
+      ibm_db.execute(stmt)
+      account = ibm_db.fetch_assoc(stmt)
+      if account:
+         query = 'UPDATE CUSTOMERS SET PASSWORD=?,CPASSWORD=? WHERE EMAIL=?'
+         pstmt = ibm_db.prepare(conn, query)
+         ibm_db.bind_param(pstmt, 1, cp)
+         ibm_db.bind_param(pstmt, 2, cop)
+         ibm_db.bind_param(pstmt, 3, email)
+         ibm_db.execute(pstmt)     
+      return render_template('profile.html')
+     
 
 #-----------------------------editStock------------------------------
 
@@ -305,6 +334,26 @@ def createorder():
             session['ord_quantity'] = ord_quantity
             session['ord_item_ppq'] = oitem_ppq
             comsg="Order created successfully"
+
+            sql = 'SELECT * FROM ITEMS WHERE EMAIL =?'
+            stmt = ibm_db.prepare(conn, sql)
+            ibm_db.bind_param(stmt, 1, email)
+            ibm_db.execute(stmt)
+            dictionary=ibm_db.fetch_assoc(stmt)
+            oiqty=dictionary["ITEMSTOCK"]
+            niqty=ord_quantity
+            new_qty = int(oiqty) - int(niqty)
+            new_total = int(new_qty)*int(oitem_ppq)
+
+
+            query = 'UPDATE ITEMS SET ITEMSTOCK=?,ITEMRPQ=?,ITEMTOTALWORTH=? WHERE ITEMID=? AND EMAIL=?'
+            pstmt = ibm_db.prepare(conn, query)
+            ibm_db.bind_param(pstmt, 1, new_qty)
+            ibm_db.bind_param(pstmt, 2, oitem_ppq)
+            ibm_db.bind_param(pstmt, 3, new_total)
+            ibm_db.bind_param(pstmt, 4, oitem_id)
+            ibm_db.bind_param(pstmt, 5, email)
+            ibm_db.execute(pstmt)
             return render_template('orders.html',comsg=comsg)
                     
         else:
