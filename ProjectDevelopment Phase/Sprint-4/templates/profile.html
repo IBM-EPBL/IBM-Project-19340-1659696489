@@ -36,6 +36,11 @@
                 </div>
                 <button class="submit-button">Update</button>
             </form> -->
+            {% if upmsg=='Profile password updated'%}
+            <div class="mx-8 mt-2 text-success">{{ upmsg }}</div> <br>
+            {% else %}
+            <div class="mx-8 mt-2 text-danger">{{ upmsg }}</div> <br>
+            {% endif %}
             <form action="{{url_for('updatepassword') }}" method="post">
                 <h3>Update Password</h3>
                 <div class="field">

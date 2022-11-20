@@ -203,7 +203,9 @@ def updatepassword():
    if session.get('loggedin')!= True:
          return redirect(url_for("signin"))
    else:
-      email=session['user']   
+      email=session['user']  
+      uname = session['uname']
+      upmsg="Previous password not matched" 
       pp = request.form['prev-password']
       cp = request.form["cur-password"]
       cop = request.form['confirm-password']
@@ -220,8 +222,9 @@ def updatepassword():
          ibm_db.bind_param(pstmt, 1, cp)
          ibm_db.bind_param(pstmt, 2, cop)
          ibm_db.bind_param(pstmt, 3, email)
-         ibm_db.execute(pstmt)     
-      return render_template('profile.html')
+         ibm_db.execute(pstmt)
+         upmsg="Profile password updated"    
+      return render_template('profile.html',usname=uname,email=email,upmsg=upmsg)
      
 
 #-----------------------------editStock------------------------------
