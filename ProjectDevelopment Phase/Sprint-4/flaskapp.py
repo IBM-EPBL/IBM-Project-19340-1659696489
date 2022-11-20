@@ -85,17 +85,17 @@ def dashboard():
       ibm_db.bind_param(stmt, 1, user)
       ibm_db.execute(stmt)
       dictionary=ibm_db.fetch_assoc(stmt)
-      # if session.get('ord_id')== True:
-      #   oiqty=dictionary["ITEMSTOCK"]
-      #   niqty=session['ord_quantity']
-      #   new_qty= (int)(oiqty)- (int)(niqty)
-      #   orpq=dictionary["ITEMRPQ"]
-      #   nrpq=session['ord_item_ppq']
-      #   new_rqp= (int)(orpq)- (int)(nrpq)
-      #   query = 'UPDATE ITEMS SET ITEMQUANTITYSOLD=?,ITEMRPQ=?,TOTAL=? WHERE ORDERID=? AND ITEMID=? AND EMAIL=?'
-      #   pstmt = ibm_db.prepare(conn, query)
-      #   ibm_db.bind_param(pstmt, 1, user)
-      #   ibm_db.execute(pstmt)
+      if session.get('ord_id')== True:
+         oiqty=dictionary["ITEMSTOCK"]
+         niqty=session['ord_quantity']
+         new_qty= (int)(oiqty)- (int)(niqty)
+         orpq=dictionary["ITEMRPQ"]
+         nrpq=session['ord_item_ppq']
+         new_rqp= (int)(orpq)- (int)(nrpq)
+         query = 'UPDATE ITEMS SET ITEMQUANTITYSOLD=?,ITEMRPQ=?,TOTAL=? WHERE ORDERID=? AND ITEMID=? AND EMAIL=?'
+         pstmt = ibm_db.prepare(conn, query)
+         ibm_db.bind_param(pstmt, 1, user)
+         ibm_db.execute(pstmt)
       items=[]
       headings = [*dictionary]
       while dictionary != False:
